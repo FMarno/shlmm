@@ -1,28 +1,30 @@
 PVector point;
+Level level;
 void setup() {
   size(1040, 640);
   frameRate(FRAME_RATE);
   rectMode(CENTER);
-  player = new Player(new PVector(200, 200), new PVector(0, 0), null);
+  level = new Level();
+  Player player = new Player(level, new PVector(200, 200), new PVector(0, 0));
+  level.player = player;
+  level.bullets.add(new Bullet(level, new PVector(900, 200), PI));
   dt =1;
-  player.giveGun(new HandGun(player.location));
+  player.giveGun(new HandGun(level, player.location));
 }
 
 void draw() {
-  if (pause) return;
-        
-  background(255);
-  player.heading = new PVector(mouseX - player.location.x, mouseY - player.location.y).heading();
-  player.display(#ff00ff);
-  player.update();
-  text(dt, 50, 20);
-
-
-  for (Bullet b : bullets) {
-    b.update();
-    b.display();
+  if (PAUSE) return;
+  if (GAME_OVER){
+   //background(0);
+   fill(#ff0000);
+   text("Game Over", width/2, height/2);
+   return;
   }
 
-  if (mousePressed) player.fireGun();
+  background(255);
+  level.update();
+  level.display();
+  text(dt, 50, 20);
 
+  if (mousePressed) level.player.fireGun();
 }

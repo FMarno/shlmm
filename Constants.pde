@@ -5,9 +5,9 @@ int SQUARE_SIZE = CHAR_WIDTH;
 int FRAME_RATE = 60;
 
 float dt;
-boolean W, A, S, D, pause;
+boolean W, A, S, D, PAUSE, GAME_OVER;
 PVector unit = new PVector(10, 10);
 
-Player player;
 
-ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+import java.awt.geom.*;
+import java.util.Iterator;

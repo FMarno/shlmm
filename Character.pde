@@ -6,7 +6,7 @@ class Character {
   Level level;
   Gun gun;
 
-  public Character(PVector location, PVector direction, Level level) {
+  public Character(Level level, PVector location, PVector direction) {
     this.location = location;
     this.direction = direction;
     velocity = new PVector();
@@ -20,7 +20,7 @@ class Character {
     pushMatrix();
     {
       translate(location.x, location.y);
-      rotate(heading + PI/2);
+      rotate(heading + HALF_PI);
       rect(0, 0, CHAR_WIDTH, CHAR_HEIGHT, CHAR_HEIGHT/2);
     }
     popMatrix();
@@ -56,7 +56,7 @@ class Character {
   }
 
   boolean contains(PVector point) {
-    float angle = heading + PI/2;
+    float angle = heading + HALF_PI;
     PVector c = location.copy();
     PVector p = point.copy();
 
@@ -66,5 +66,23 @@ class Character {
     float w = CHAR_WIDTH;
     float h = CHAR_HEIGHT;
     return (c.x-w/2 < p.x && p.x < c.x + w/2 && c.y-h/2 < p.y && p.y < c.y+h/2);
+  }
+
+  boolean intersectedBy(PVector p1, PVector p2) {
+    float angle = heading + HALF_PI;
+    PVector c = location.copy();
+    PVector pi = p1.copy();
+    PVector px = p2.copy();
+
+    c.rotate(-angle);
+    pi.rotate(-angle);
+    px.rotate(-angle);
+
+    float w = CHAR_WIDTH;
+    float h = CHAR_HEIGHT;
+
+    Line2D.Float line = new Line2D.Float(pi.x, pi.y, px.x, px.y);
+
+    return line.intersects(c.x - w/2, c.y - h/2, w, h);
   }
 }

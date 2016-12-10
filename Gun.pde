@@ -1,4 +1,5 @@
 abstract class Gun {
+  Level level;
   float reload_time;
   float time_to_reload;
   int ammo;

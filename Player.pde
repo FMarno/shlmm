@@ -1,13 +1,16 @@
 class Player extends Character {
 
-  public Player(PVector location, PVector direction, Level level) {
-    super(location, direction, level);
+  public Player(Level level, PVector location, PVector direction) {
+    super(level, location, direction);
   }
 
   void update() {
+    heading = new PVector(mouseX - location.x, mouseY - location.y).heading();
+
     PVector acceleration = direction.copy();
     acceleration.setMag(ACC);
     velocity.add(acceleration);
+
     if (velocity.mag() > SPEED) {
       velocity.setMag(SPEED);
     }
@@ -19,6 +22,7 @@ class Player extends Character {
     location.add(velocity);
     velocity.div(dt);
     velocity.mult(0.93);
+
     if (gun != null)
       gun.update();
   }
