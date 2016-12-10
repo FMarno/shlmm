@@ -1,5 +1,7 @@
+PVector point;
 void setup() {
-  size(1024, 632);
+  size(1040, 640);
+  frameRate(FRAME_RATE);
   rectMode(CENTER);
   player = new Player(new PVector(200, 200), new PVector(0, 0), null);
   dt =1;
@@ -8,12 +10,13 @@ void setup() {
 
 void draw() {
   if (pause) return;
+        
   background(255);
   player.heading = new PVector(mouseX - player.location.x, mouseY - player.location.y).heading();
   player.display(#ff00ff);
   player.update();
   text(dt, 50, 20);
-  text(player.gun.time_to_reload, 100, 20);
+
 
   for (Bullet b : bullets) {
     b.update();
@@ -21,4 +24,5 @@ void draw() {
   }
 
   if (mousePressed) player.fireGun();
+
 }

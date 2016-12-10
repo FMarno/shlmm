@@ -15,6 +15,7 @@ class Bullet {
   }
 
   void display() {
+    noStroke();
     ellipse(location.x, location.y, BULLET_SIZE, BULLET_SIZE);
   }
 }

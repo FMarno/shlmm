@@ -54,4 +54,17 @@ class Character {
   void fireGun() {
     if (gun != null) gun.fire(heading);
   }
+
+  boolean contains(PVector point) {
+    float angle = heading + PI/2;
+    PVector c = location.copy();
+    PVector p = point.copy();
+
+    c.rotate(-angle);
+    p.rotate(-angle);
+
+    float w = CHAR_WIDTH;
+    float h = CHAR_HEIGHT;
+    return (c.x-w/2 < p.x && p.x < c.x + w/2 && c.y-h/2 < p.y && p.y < c.y+h/2);
+  }
 }
