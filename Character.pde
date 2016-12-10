@@ -4,6 +4,7 @@ class Character {
   PVector velocity;
   float heading;
   Level level;
+  Gun gun;
 
   public Character(PVector location, PVector direction, Level level) {
     this.location = location;
@@ -19,11 +20,11 @@ class Character {
     pushMatrix();
     {
       translate(location.x, location.y);
-      rotate(-heading);
+      rotate(heading + PI/2);
       rect(0, 0, CHAR_WIDTH, CHAR_HEIGHT, CHAR_HEIGHT/2);
     }
     popMatrix();
-    PVector.fromAngle(-heading + PI/2, unit);
+    PVector.fromAngle(heading, unit);
     unit.mult(2);
     ellipse(location.x + unit.x, location.y + unit.y, HEAD_SIZE, HEAD_SIZE);
   }
@@ -32,16 +33,25 @@ class Character {
     PVector acceleration = direction.copy();
     acceleration.setMag(ACC);
     velocity.add(acceleration);
-    if (velocity.mag() > SPEED){
-     velocity.setMag(SPEED); 
-    }
-    dt = velocity.mag()/SPEED;
-    if (dt > -0.1 && dt < 0.1) {
-      dt = 0.1;
+    if (velocity.mag() > SPEED) {
+      velocity.setMag(SPEED);
     }
     velocity.mult(dt);
     location.add(velocity);
     velocity.div(dt);
     velocity.mult(0.93);
+
+    if (gun != null)
+      gun.update();
+  }
+
+  void giveGun(Gun gun) {
+    if (this.gun == null) {
+      this.gun = gun;
+    }
+  }
+
+  void fireGun() {
+    if (gun != null) gun.fire(heading);
   }
 }
