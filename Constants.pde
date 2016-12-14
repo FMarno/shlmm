@@ -4,7 +4,7 @@ int SQUARE_SIZE = CHAR_WIDTH;
 
 int FRAME_RATE = 60;
 
-float dt;
+float dt = 1;
 boolean W, A, S, D, PAUSE, GAME_OVER;
 PVector unit = new PVector(10, 10);
 

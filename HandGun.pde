@@ -3,7 +3,7 @@ class HandGun extends Gun {
   public HandGun(Level level, PVector location) {
     this.level = level;
     this.location = location;
-    reload_time = 0 * FRAME_RATE;
+    reload_time = 0.01 * FRAME_RATE;
   }
 
   void fire(float heading) {
