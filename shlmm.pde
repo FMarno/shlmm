@@ -9,17 +9,11 @@ void setup() {
   rectMode(CENTER);
   minim = new Minim(this);
   song = minim.loadFile("game.mp3");
-  song.loop();
+  //song.loop(); TODO put this back
 
   //level setup
   lg = new LevelGenerator();
   level = lg.parseLevel("levels/level1.json");
-
-
-  /*level.bullets.add(new Bullet(level, new PVector(900, 200), PI));
-   level.walls.add(new Wall(0,0, 0, 12));
-   level.walls.add(new Wall(0,12, 15,12));
-   player.giveGun(new HandGun(level, player.location));*/
 }
 
 void draw() {
