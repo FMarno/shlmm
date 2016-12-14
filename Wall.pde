@@ -54,4 +54,8 @@ class Wall {
 
     return line.intersects(start.x, start.y, end.x-start.x, end.y-start.y);
   }
+  
+  boolean contains(final PVector p){
+   return (start.x <= p.x && start.y <= p.y && p.x <= end.x && p.y <= end.y); 
+  }
 }

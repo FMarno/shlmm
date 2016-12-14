@@ -19,7 +19,10 @@ class Player extends Character {
       dt = 0.01;
     }
     velocity.mult(dt);
-    location.add(velocity);
+    PVector projection = PVector.add(location, velocity);
+    
+    if (!inWall(projection))
+      location.add(velocity);
     velocity.div(dt);
     velocity.mult(0.93);
 

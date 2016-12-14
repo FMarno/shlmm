@@ -85,4 +85,31 @@ abstract class Character {
 
     return line.intersects(c.x - w/2, c.y - h/2, w, h);
   }
+
+  boolean inWall(final PVector location) {
+    boolean anyIn = false;
+    float x = location.x;
+    float y = location.y;
+    PVector[] points = {
+      new PVector(CHAR_WIDTH / 2, CHAR_WIDTH / 2), 
+      new PVector(CHAR_WIDTH / 2, -CHAR_WIDTH / 2), 
+      new PVector(-CHAR_WIDTH / 2, CHAR_WIDTH / 2), 
+      new PVector(-CHAR_WIDTH / 2, -CHAR_WIDTH / 2), 
+      new PVector(0, CHAR_WIDTH / 2), 
+      new PVector(0, -CHAR_WIDTH / 2), 
+      new PVector(CHAR_WIDTH / 2, 0), 
+      new PVector(-CHAR_WIDTH / 2, 0)
+    };
+    for (PVector p : points) {
+      p.rotate(heading + HALF_PI);
+      p.add(location);
+      fill(255);
+      ellipse(p.x, p.y, 5, 5);
+      for (Wall w : level.walls) {
+        anyIn = anyIn || w.contains(p);
+        if (anyIn) return true;
+      }
+    }
+    return false;
+  }
 }
