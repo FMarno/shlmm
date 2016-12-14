@@ -14,6 +14,13 @@ class LevelGenerator {
       JSONArray end = (JSONArray) wall.get(1);
       level.walls.add(new Wall((Integer)start.get(0), (Integer)start.get(1), (Integer)end.get(0), (Integer)end.get(1)));
     }
+    //border
+    int w = json.getInt("width");
+    int h = json.getInt("height");
+    level.walls.add(new Wall(-1,-1,-1,h));
+    level.walls.add(new Wall(w,-1, w,h));
+    level.walls.add(new Wall(0,-1,w-1,-1));
+    level.walls.add(new Wall(0,h,w-1,h));
     //player
     JSONObject player = (JSONObject) json.get("player");
     JSONArray playerLocation = (JSONArray) player.get("location");
@@ -35,7 +42,10 @@ class LevelGenerator {
       JSONObject agent = (JSONObject) agents.get(i);
       JSONArray agentL = (JSONArray) agent.get("location");
       gun = agent.optString("gun");
-      Character a = new Character(level, gridCoordsToPoint(new Tuple((Integer)agentL.get(0), (Integer)agentL.get(1))), new PVector(0, 0));
+      Agent a = new Agent(level, gridCoordsToPoint(new Tuple((Integer)agentL.get(0), (Integer)agentL.get(1))), new PVector(0, 0));
+      a.location.x += SQUARE_SIZE/2;
+      a.location.y += SQUARE_SIZE/2;
+      a.heading = -PI/2;
       switch(gun) {
       case "hand" : 
         a.giveGun(new HandGun(level, a.location)); 
@@ -43,7 +53,7 @@ class LevelGenerator {
       default:
         break;
       }
-      level.characters.add(a);
+      level.agents.add(a);
     }
 
     return level;

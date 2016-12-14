@@ -1,4 +1,6 @@
-{	"walls":
+{	"width": 26,
+	"height": 16,
+	"walls":
 	[
 		[[0,0],[0,12]],
 		[[0,12],[15,12]],
@@ -7,7 +9,7 @@
 	],
 	"player":
 	{
-		"location":[5,5],
+		"location":[15,5],
 		"gun": "hand"
 	},
 	"agents":

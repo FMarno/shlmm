@@ -16,6 +16,10 @@ void keyPressed() {
     D = true;
     level.player.direction.x = SPEED;
     break;
+  case 'r':
+    if (GAME_OVER)
+       restart(); 
+    break;
   }
 }
 

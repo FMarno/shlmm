@@ -21,11 +21,11 @@ class Bullet {
 
     boolean killed = false;
     PVector p = location.copy();
-    Iterator<Character> cs = level.characters.iterator();
-    while (cs.hasNext()) {
-      Character c = cs.next();
-      if (c.intersectedBy(pi, p)) {
-        cs.remove();
+    Iterator<Agent> as = level.agents.iterator();
+    while (as.hasNext()) {
+      Character a = as.next();
+      if (a.intersectedBy(pi, p)) {
+        as.remove();
         killed = true;
       }
     }

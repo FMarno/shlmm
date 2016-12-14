@@ -1,14 +1,14 @@
 class Level {
   Character player;
-  ArrayList<Character> characters = new ArrayList<Character>();
+  ArrayList<Agent> agents = new ArrayList<Agent>();
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
   ArrayList<Wall> walls = new ArrayList<Wall>();
 
 
   void update() {
 
-    for (Character c : characters) {
-      c.update();
+    for (Agent a : agents) {
+      a.update();
     }
     player.update();
     for (int i = 0; i<bullets.size(); i++) {
@@ -20,8 +20,8 @@ class Level {
     for (Wall w : walls){
      w.display(); 
     }
-    for (Character c : characters) {
-      c.display(#ff0000);
+    for (Agent a : agents) {
+      a.display(#ff0000);
     }
 
     player.display(#ff00ff);

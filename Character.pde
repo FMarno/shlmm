@@ -1,4 +1,4 @@
-class Character {
+abstract class Character {
   PVector location;
   PVector direction;
   PVector velocity;

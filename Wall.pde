@@ -20,9 +20,8 @@ class Wall {
   
   
   void display(){
-      strokeWeight(2);
-      stroke(0);
-      fill(0);
+      noStroke();
+      fill(#22201A);
       rect(centre.x, centre.y, end.x - start.x, end.y - start.y);
   }
   
@@ -38,6 +37,12 @@ class Wall {
      float x = coords.x * SQUARE_SIZE;
      float y = coords.y * SQUARE_SIZE;
      return new PVector(x,y);
+  }
+  
+  boolean intersectedBy(final PVector pi, final PVector px){
+   Line2D.Float line = new Line2D.Float(pi.x, pi.y, px.x, px.y);
+
+    return line.intersects(start.x, start.y, end.x-start.x, end.y-start.y); 
   }
   
 }
