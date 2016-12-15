@@ -26,7 +26,7 @@ class Agent extends Character {
     if (abs(orr - heading) <= ORIENTATION_INCREMENT) {
       heading = orr ;
       if (gun != null)
-        gun.fire(heading);
+        attack();
       return ;
     }
 

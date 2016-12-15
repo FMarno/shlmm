@@ -92,6 +92,19 @@ abstract class Character {
           }
         }
       }
+
+      Iterator<Agent> as = level.agents.iterator();
+      while (as.hasNext()) {
+        Agent smith = as.next();
+        PVector sloc = smith.location.copy();
+        sloc.rotate(angle);
+        if (c1.x - CHAR_WIDTH*3/2 <= sloc.x && sloc.x <= c1.x && c1.y <= sloc.y && sloc.y <= c1.y + CHAR_WIDTH) {
+          if (this.gun ==null && smith.gun != null){
+            giveGun(smith.gun);
+          }
+          as.remove();
+        }
+      }
     }
     if (gun != null)
       gun.update();
@@ -107,6 +120,7 @@ abstract class Character {
       this.gun.location =this.location;
       this.gun.velocity.setMag(0);
       this.gun.time_to_reload = this.gun.reload_time;
+      this.gun.owner = this;
     }
   }
 

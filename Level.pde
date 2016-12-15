@@ -4,6 +4,9 @@ class Level {
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
   ArrayList<Wall> walls = new ArrayList<Wall>();
   ArrayList<Gun> guns = new ArrayList<Gun>();
+  int w;
+  int h;
+  
 
 
   void update() {

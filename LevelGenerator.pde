@@ -16,11 +16,13 @@ class LevelGenerator {
     }
     //border
     int w = json.getInt("width");
+    level.w = w;
     int h = json.getInt("height");
-    level.walls.add(new Wall(-1, -1, -1, h));
-    level.walls.add(new Wall(w, -1, w, h));
-    level.walls.add(new Wall(0, -1, w-1, -1));
-    level.walls.add(new Wall(0, h, w-1, h));
+    level.h = h;
+    level.walls.add(new Wall(0, 0, 0, h-1));
+    level.walls.add(new Wall(w-1, 0, w-1, h-1));
+    level.walls.add(new Wall(1, 0, w-2, 0));
+    level.walls.add(new Wall(1, h-1, w-2, h-1));
     //player
     JSONObject player = (JSONObject) json.get("player");
     JSONArray playerLocation = (JSONArray) player.get("location");
@@ -66,8 +68,8 @@ class LevelGenerator {
       String type = g.optString("type");
       Gun theGun;
       switch(type) {
-       default :
-         theGun = new HandGun(level, loc, null);
+      default :
+        theGun = new HandGun(level, loc, null);
       }
       level.guns.add(theGun);
     }

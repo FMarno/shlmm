@@ -10,13 +10,22 @@ void setup() {
   minim = new Minim(this);
   song = minim.loadFile("game.mp3");
   //song.loop();// TODO put this back
+  
+ 
 
   //level setup
   lg = new LevelGenerator();
   level = lg.parseLevel("levels/level1.json");
+  
+   float xscale = (width/(SQUARE_SIZE))/(float)level.w;
+  float yscale = (height/SQUARE_SIZE)/(float)level.h;
+  scale = xscale < yscale ? xscale : yscale;
 }
 
 void draw() {
+  
+  scale(scale,scale);
+  
   if (PAUSE) return;
   if (GAME_OVER) {
     //background(0);
