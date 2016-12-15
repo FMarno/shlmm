@@ -3,7 +3,7 @@ class HandGun extends Gun {
   public HandGun(Level level, PVector location, Character owner) {
     super(level, location, owner);
     reload_time = 0.5 * FRAME_RATE;
-    ammo = 10;
+    ammo = 6;
   }
 
   void fire(float heading) {

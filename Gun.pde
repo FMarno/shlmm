@@ -25,7 +25,7 @@ abstract class Gun {
         stroke(#0000ff);
         strokeWeight(5);
         noFill();
-        rect(width/2, height/2, 1040, 640);
+        rect(width/2*(1/scale), height/2*(1/scale), 1040*(1/scale), 640*(1/scale));
       }
     }
   }

@@ -10,17 +10,17 @@
 	"player":
 	{
 		"location":[15,5],
-		"gun": ""
+		"gun": "hand"
 	},
 	"agents":
 	[
 	{
 		"location":[1,3],
-		"gun": "hand"
+		"gun": ""
 	},
 	{
 		"location":[8,14],
-		"gun": "hand"
+		"gun": ""
 	}
 	],
 	"guns":
