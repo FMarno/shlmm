@@ -8,7 +8,6 @@ final int FRAME_RATE = 60;
 
 float dt = 1;
 boolean W, A, S, D, PAUSE, GAME_OVER;
-PVector unit = new PVector(1, 1);
 LevelGenerator lg;
 
 

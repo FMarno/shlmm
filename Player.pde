@@ -1,8 +1,10 @@
 class Player extends Character {
 
-  public Player(Level level, PVector location, PVector direction) {
-    super(level, location, direction);
+  public Player(Level level, PVector location, PVector direction, int fill) {
+    super(level, location, direction, fill);
   }
+
+
 
   void update() {
     heading = new PVector(mouseX - location.x, mouseY - location.y).heading();
@@ -20,36 +22,45 @@ class Player extends Character {
     }
     velocity.mult(dt);
     PVector projection = PVector.add(location, velocity);
-    
+
     boolean moved = false;
-    
-    if (!inWall(projection)){
+
+    if (!inWall(projection)) {
       location.add(velocity);
       moved = true;
     }
-    
+
     if (!moved) {
       projection.x -= velocity.x;
-      if (!inWall(projection)){
-       location.y += velocity.y;
-       moved = true;
+      if (!inWall(projection)) {
+        location.y += velocity.y;
+        moved = true;
       }
     }
-    
-    if (!moved){
+
+    if (!moved) {
       projection.x += velocity.x;
       projection.y -= velocity.y;
-      if (!inWall(projection)){
-         location.x += velocity.x;
-         moved = true;
+      if (!inWall(projection)) {
+        location.x += velocity.x;
+        moved = true;
       }
     }
-      
-      
+
+
     velocity.div(dt);
     velocity.mult(0.93);
 
-    if (gun != null)
-      gun.update();
+    super.update();
+  }
+
+  void display() {
+    if (gun != null && gun.ammo ==0) {
+      stroke(#ff0000);
+      strokeWeight(5);
+      noFill();
+      rect(width/2, height/2, 1040, 640);
+    }
+    super.display();
   }
 }

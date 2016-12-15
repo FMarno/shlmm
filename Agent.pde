@@ -1,7 +1,7 @@
 class Agent extends Character {
 
-  public Agent(Level level, PVector location, PVector direction) {
-    super(level, location, direction);
+  public Agent(Level level, PVector location, PVector direction, int fill) {
+    super(level, location, direction, fill);
   }
 
 
@@ -15,8 +15,7 @@ class Agent extends Character {
       shootPlayer();
 
 
-    if (gun != null)
-      gun.update();
+    super.update();
   }
 
   void shootPlayer() {

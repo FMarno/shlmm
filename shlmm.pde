@@ -29,7 +29,7 @@ void draw() {
   level.display();
   text(dt, 50, 20);
 
-  if (mousePressed) level.player.fireGun();
+  if (mousePressed) level.player.attack();
 }
 
 void restart() {

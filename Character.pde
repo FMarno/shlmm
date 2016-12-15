@@ -5,15 +5,31 @@ abstract class Character {
   float heading;
   Level level;
   Gun gun;
+  int fill;
+  float melee = 0;
 
-  public Character(Level level, PVector location, PVector direction) {
+  public Character(Level level, PVector location, PVector direction, int fill) {
     this.location = location;
     this.direction = direction;
     velocity = new PVector();
     this.level = level;
+    this.fill = fill;
   }
 
-  void display(int fill) {
+  void attack() {
+    if (gun != null) {
+      fireGun();
+      return;
+    }
+    meleeAttack();
+  }
+
+  void meleeAttack() {
+    if (melee <1)
+      melee = FRAME_RATE/2;
+  }
+
+  void display() {
     stroke(0);
     strokeWeight(1);
     fill(fill);
@@ -24,30 +40,73 @@ abstract class Character {
       rect(0, 0, CHAR_WIDTH, CHAR_HEIGHT, CHAR_HEIGHT/2);
     }
     popMatrix();
-    PVector.fromAngle(heading, unit);
+
+    if (melee>FRAME_RATE/3) {
+      stroke(0);
+      strokeWeight(1);
+      fill(fill);
+      pushMatrix();
+      PVector offset = PVector.fromAngle(heading +HALF_PI);
+      offset.setMag(15);
+      {
+        translate(location.x + offset.x, location.y + offset.y);
+        rotate(heading + HALF_PI - HALF_PI/4);
+        rect(0, -CHAR_WIDTH/2, CHAR_WIDTH/3, CHAR_WIDTH);
+      }
+      popMatrix();
+    }
+
+    PVector unit = PVector.fromAngle(heading);
     unit.mult(2);
     ellipse(location.x + unit.x, location.y + unit.y, HEAD_SIZE, HEAD_SIZE);
   }
 
   void update() {
-    PVector acceleration = direction.copy();
-    acceleration.setMag(ACC);
-    velocity.add(acceleration);
-    if (velocity.mag() > SPEED) {
-      velocity.setMag(SPEED);
-    }
-    velocity.mult(dt);
-    location.add(velocity);
-    velocity.div(dt);
-    velocity.mult(0.93);
 
+    if (melee >FRAME_RATE/3) {
+      fill(255);
+      PVector c1 = new PVector(-CHAR_HEIGHT/2, CHAR_WIDTH/2);
+      PVector c2 = new PVector(-CHAR_HEIGHT/2, -CHAR_WIDTH/2);
+      c1.rotate(heading);
+      c2.rotate(heading);
+      PVector offset = PVector.fromAngle(heading);
+      offset.setMag(CHAR_HEIGHT);
+      c1.add(offset);
+      c2.add(offset);
+      c1.add(location);
+      c2.add(location);
+      float angle = atan2(c2.x - c1.x, c2.y - c1.y);
+
+      c1.rotate(angle);
+
+      Iterator<Gun> gs = level.guns.iterator();
+      while (gs.hasNext()) {
+        Gun gun = gs.next();
+        PVector gloc = gun.location.copy();
+        gloc.rotate(angle);
+        if (c1.x - CHAR_WIDTH*3/2 <= gloc.x && gloc.x <= c1.x && c1.y <= gloc.y && gloc.y <= c1.y + CHAR_WIDTH) {
+          if (this.gun == null) {
+            giveGun(gun);
+            gs.remove();
+            break;
+          }
+        }
+      }
+    }
     if (gun != null)
       gun.update();
+
+
+    if (melee > 0)
+      melee-=dt;
   }
 
   void giveGun(Gun gun) {
     if (this.gun == null) {
       this.gun = gun;
+      this.gun.location =this.location;
+      this.gun.velocity.setMag(0);
+      this.gun.time_to_reload = this.gun.reload_time;
     }
   }
 
