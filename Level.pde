@@ -4,9 +4,10 @@ class Level {
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
   ArrayList<Wall> walls = new ArrayList<Wall>();
   ArrayList<Gun> guns = new ArrayList<Gun>();
+  ArrayList<PositionNode> nodes = new ArrayList<PositionNode>();
   int w;
   int h;
-  
+
 
 
   void update() {
@@ -38,6 +39,7 @@ class Level {
     for (Gun g : guns) {
       g.display();
     }
+
   }
 
   boolean outOfBounds(PVector l) {

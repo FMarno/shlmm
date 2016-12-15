@@ -4,6 +4,8 @@ final int SQUARE_SIZE = CHAR_WIDTH;
 
 final float ORIENTATION_INCREMENT = PI/32;
 float scale;
+final float SAT_RADIUS = 0.1f;
+
 
 final int FRAME_RATE = 60;
 
@@ -14,6 +16,8 @@ LevelGenerator lg;
 
 import java.awt.geom.*;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentSkipListMap;
+
 import org.json.JSONObject;
 import org.json.JSONArray;
 import ddf.minim.*;
