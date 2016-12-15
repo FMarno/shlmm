@@ -1,4 +1,4 @@
-abstract class Character {
+class Character {
   PVector location;
   PVector direction;
   PVector velocity;
@@ -64,51 +64,55 @@ abstract class Character {
   void update() {
 
     if (melee >FRAME_RATE/3) {
-      fill(255);
-      PVector c1 = new PVector(-CHAR_HEIGHT/2, CHAR_WIDTH/2);
-      PVector c2 = new PVector(-CHAR_HEIGHT/2, -CHAR_WIDTH/2);
-      c1.rotate(heading);
-      c2.rotate(heading);
-      PVector offset = PVector.fromAngle(heading);
-      offset.setMag(CHAR_HEIGHT);
-      c1.add(location);
-      c2.add(location);
-      float angle = atan2(c2.x - c1.x, c2.y - c1.y);
+      //generate hit points
+      PVector[] points = {new PVector(0, 0), new PVector(CHAR_WIDTH/2, 0), new PVector(CHAR_WIDTH, 0)};
+      for (PVector p : points) {
+        p.rotate(heading);
+        p.add(location); 
+        fill(255);
+        ellipse(p.x, p.y, 5, 5);
+      }
 
-      c1.rotate(angle);
+      Iterator<Agent> as = level.agents.iterator();
+      while (as.hasNext()) {
+        Agent smith = as.next();
+        if (smith == this) {
+          continue;
+        }
+        for (PVector p : points) {
+          if (smith.contains(p)) {
+            if (this.gun == null && smith.gun != null) {
+              giveGun(smith.gun);
+            }
+            as.remove();
+            melee = 0;
+            break;
+          }
+        }
+      }
 
       Iterator<Gun> gs = level.guns.iterator();
       while (gs.hasNext()) {
-        Gun gun = gs.next();
-        PVector gloc = gun.location.copy();
-        gloc.rotate(angle);
-        if (c1.x - CHAR_WIDTH*2 <= gloc.x && gloc.x <= c1.x && c1.y <= gloc.y && gloc.y <= c1.y + CHAR_WIDTH) {
-          if (this.gun == null) {
-            giveGun(gun);
+        Gun g = gs.next();
+        for (PVector p : points) {
+          if (this.gun == null && g.contains(p)) {
+            giveGun(g);
             gs.remove();
             break;
           }
         }
       }
 
-      Iterator<Agent> as = level.agents.iterator();
-      while (as.hasNext()) {
-        Agent smith = as.next();
-        if (smith == this) continue;
-        PVector sloc = smith.location.copy();
-        sloc.rotate(angle);
-        if (c1.x - CHAR_WIDTH*3/2 <= sloc.x && sloc.x <= c1.x && c1.y <= sloc.y && sloc.y <= c1.y + CHAR_WIDTH) {
-          if (this.gun ==null && smith.gun != null) {
-            giveGun(smith.gun);
+      if (this != level.player) {
+        for (PVector p : points) {
+          if (level.player.contains(p)) {
+            GAME_OVER = true;
           }
-          as.remove();
         }
       }
-
-      if (c1.x - CHAR_WIDTH*3/2 <= level.player.location.x && level.player.location.x <= c1.x && c1.y <= level.player.location.y && level.player.location.y <= c1.y + CHAR_WIDTH) {
-        GAME_OVER = true;
-      }
     }
+
+
     if (gun != null)
       gun.update();
 

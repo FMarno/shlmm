@@ -4,7 +4,7 @@ final int SQUARE_SIZE = CHAR_WIDTH;
 
 final float ORIENTATION_INCREMENT = PI/32;
 float scale;
-final float SAT_RADIUS = SQUARE_SIZE/2;
+final float SAT_RADIUS = SQUARE_SIZE*(3/2);
 
 
 final int FRAME_RATE = 60;
@@ -12,6 +12,7 @@ final int FRAME_RATE = 60;
 float dt = 1;
 boolean W, A, S, D, PAUSE, GAME_OVER;
 LevelGenerator lg;
+Level level;
 
 
 import java.awt.geom.*;
@@ -22,4 +23,6 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import ddf.minim.*;
 Minim minim;
-AudioPlayer song;
+AudioPlayer gameSong;
+
+enum Mode{GAME, MENU, MAKER}

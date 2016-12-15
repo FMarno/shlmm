@@ -11,12 +11,13 @@ class Agent extends Character {
       covered = covered || w.intersectedBy(location, level.player.location);
       if (covered) break;
     }
-    if (gun != null && !covered)
+    if (gun != null && !covered) {
       shootPlayer();
-    else if (gun == null && level.player.location.dist(location) < SAT_RADIUS)
+    } else if (gun == null && level.player.location.dist(location) < SAT_RADIUS) {
       punchPlayer();
-    else
+    } else {
       move(covered);
+    }
 
     super.update();
   }
@@ -72,10 +73,14 @@ class Agent extends Character {
   }
 
   void move(boolean covered) {
+    if (PVector.dist(level.player.location, location) < SAT_RADIUS) { 
+      println("hello");
+      return;
+    }
     if (!covered) {
       direction = PVector.sub(level.player.location, location);
     }
-    float distance = direction.mag();
+
 
 
     if (covered) {
@@ -85,11 +90,10 @@ class Agent extends Character {
         PositionNode next = start.pathToPlayer();
         if (next != null) {
           direction = next.location.copy().sub(location);
-          distance = direction.mag();
         }
       }
     }
-    if (distance < SAT_RADIUS) return;
+
 
 
     PVector acceleration = direction.copy();
@@ -129,6 +133,26 @@ class Agent extends Character {
 
     velocity.div(dt);
     velocity.mult(0.93);
+    
+    float orr = velocity.heading();
+
+    // Will take a frame extra at the PI boundary
+    if (abs(orr - heading) <= ORIENTATION_INCREMENT) {
+      heading = orr ;
+      return ;
+    }
+    // if it's less than me, then how much if up to PI less, decrease otherwise increase
+    if (orr < heading) {
+      if (heading - orr < PI) heading -= ORIENTATION_INCREMENT ;
+      else heading += ORIENTATION_INCREMENT ;
+    } else {
+      if (orr - heading < PI) heading += ORIENTATION_INCREMENT ;
+      else heading -= ORIENTATION_INCREMENT ;
+    }
+
+    // Keep in bounds
+    if (heading > PI) heading -= 2*PI ;
+    else if (heading < -PI) heading += 2*PI ;
   }
 
   PositionNode findNearestNode() {

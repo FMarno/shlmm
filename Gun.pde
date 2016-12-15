@@ -35,4 +35,8 @@ abstract class Gun {
     noStroke();
     rect(location.x, location.y, 10, 4);
   }
+  
+  boolean contains(PVector p){
+    return (location.x - SQUARE_SIZE/3 <= p.x && p.x <= location.x + SQUARE_SIZE/3 && location.y - SQUARE_SIZE/3 <= p.y && p.y <= location.y + SQUARE_SIZE/3);
+  }
 }
