@@ -99,7 +99,7 @@ abstract class Character {
         PVector sloc = smith.location.copy();
         sloc.rotate(angle);
         if (c1.x - CHAR_WIDTH*3/2 <= sloc.x && sloc.x <= c1.x && c1.y <= sloc.y && sloc.y <= c1.y + CHAR_WIDTH) {
-          if (this.gun ==null && smith.gun != null){
+          if (this.gun ==null && smith.gun != null) {
             giveGun(smith.gun);
           }
           as.remove();
@@ -176,5 +176,17 @@ abstract class Character {
       }
     }
     return false;
+  }
+
+  void dropGun() {
+    if (gun == null)
+      return;
+    gun.velocity = PVector.fromAngle(heading);
+    gun.velocity.setMag(5);
+    gun.velocity.add(velocity);
+    gun.location = location.copy();
+    level.guns.add(gun);
+    gun.owner = null;
+    gun = null;
   }
 }

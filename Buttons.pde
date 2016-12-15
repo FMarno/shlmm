@@ -20,6 +20,9 @@ void keyPressed() {
     //if (GAME_OVER)
     restart(); 
     break;
+  case ' ':
+    level.player.dropGun();
+    break;
   }
 }
 
