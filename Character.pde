@@ -71,8 +71,6 @@ abstract class Character {
       c2.rotate(heading);
       PVector offset = PVector.fromAngle(heading);
       offset.setMag(CHAR_HEIGHT);
-      c1.add(offset);
-      c2.add(offset);
       c1.add(location);
       c2.add(location);
       float angle = atan2(c2.x - c1.x, c2.y - c1.y);
@@ -84,7 +82,7 @@ abstract class Character {
         Gun gun = gs.next();
         PVector gloc = gun.location.copy();
         gloc.rotate(angle);
-        if (c1.x - CHAR_WIDTH*3/2 <= gloc.x && gloc.x <= c1.x && c1.y <= gloc.y && gloc.y <= c1.y + CHAR_WIDTH) {
+        if (c1.x - CHAR_WIDTH*2 <= gloc.x && gloc.x <= c1.x && c1.y <= gloc.y && gloc.y <= c1.y + CHAR_WIDTH) {
           if (this.gun == null) {
             giveGun(gun);
             gs.remove();
@@ -96,6 +94,7 @@ abstract class Character {
       Iterator<Agent> as = level.agents.iterator();
       while (as.hasNext()) {
         Agent smith = as.next();
+        if (smith == this) continue;
         PVector sloc = smith.location.copy();
         sloc.rotate(angle);
         if (c1.x - CHAR_WIDTH*3/2 <= sloc.x && sloc.x <= c1.x && c1.y <= sloc.y && sloc.y <= c1.y + CHAR_WIDTH) {
@@ -104,6 +103,10 @@ abstract class Character {
           }
           as.remove();
         }
+      }
+
+      if (c1.x - CHAR_WIDTH*3/2 <= level.player.location.x && level.player.location.x <= c1.x && c1.y <= level.player.location.y && level.player.location.y <= c1.y + CHAR_WIDTH) {
+        GAME_OVER = true;
       }
     }
     if (gun != null)

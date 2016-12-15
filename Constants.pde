@@ -4,7 +4,7 @@ final int SQUARE_SIZE = CHAR_WIDTH;
 
 final float ORIENTATION_INCREMENT = PI/32;
 float scale;
-final float SAT_RADIUS = 0.1f;
+final float SAT_RADIUS = SQUARE_SIZE/2;
 
 
 final int FRAME_RATE = 60;

@@ -13,10 +13,10 @@ class Agent extends Character {
     }
     if (gun != null && !covered)
       shootPlayer();
-    else if (gun == null && level.player.location.dist(location) < SQUARE_SIZE*3/2)
+    else if (gun == null && level.player.location.dist(location) < SAT_RADIUS)
       punchPlayer();
     else
-      move();
+      move(covered);
 
     super.update();
   }
@@ -71,20 +71,26 @@ class Agent extends Character {
     else if (heading < -PI) heading += 2*PI ;
   }
 
-  void move() {
+  void move(boolean covered) {
+    if (!covered) {
+      direction = PVector.sub(level.player.location, location);
+    }
     float distance = direction.mag();
 
-    PositionNode start = findNearestNode();
 
-    if (start != null) {
-      PositionNode next = start.pathToPlayer();
-      if (next != null) {
-        direction = next.location.copy().sub(location);
-        distance = direction.mag();
+    if (covered) {
+      PositionNode start = findNearestNode();
+
+      if (start != null) {
+        PositionNode next = start.pathToPlayer();
+        if (next != null) {
+          direction = next.location.copy().sub(location);
+          distance = direction.mag();
+        }
       }
     }
     if (distance < SAT_RADIUS) return;
-    
+
 
     PVector acceleration = direction.copy();
     acceleration.setMag(ACC);
