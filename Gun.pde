@@ -4,6 +4,8 @@ abstract class Gun {
   float time_to_reload;
   int ammo;
   PVector location;
+  
+  public Gun(Level level, PVector location, Character owner); 
 
   abstract void fire(float heading);
 

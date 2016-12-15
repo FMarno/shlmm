@@ -1,6 +1,6 @@
 class HandGun extends Gun {
 
-  public HandGun(Level level, PVector location) {
+  public HandGun(Level level, PVector location, Character owner) {
     this.level = level;
     this.location = location;
     reload_time = 0.5 * FRAME_RATE;

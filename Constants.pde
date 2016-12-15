@@ -1,8 +1,8 @@
 final int HEAD_SIZE = 15, CHAR_WIDTH = 40, CHAR_HEIGHT = 25, BULLET_SIZE = 5;
-final float SPEED = 3, ACC=SPEED/10, BULLET_SPEED = 15;
+final float SPEED = 3, ACC=SPEED/10, BULLET_SPEED = 20;
 final int SQUARE_SIZE = CHAR_WIDTH;
 
-final float ORIENTATION_INCREMENT = PI/32 ;
+final float ORIENTATION_INCREMENT = PI/32;
 
 final int FRAME_RATE = 60;
 

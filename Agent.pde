@@ -9,8 +9,6 @@ class Agent extends Character {
     boolean covered = false;
     for (Wall w : level.walls) {
       covered = covered || w.intersectedBy(location, level.player.location);
-      ellipse(w.start.x, w.start.y, 10, 10);
-      ellipse(w.end.x, w.end.y, 10, 10);
       if (covered) break;
     }
     if (!covered)
@@ -22,18 +20,29 @@ class Agent extends Character {
   }
 
   void shootPlayer() {
-    float target = PVector.sub(level.player.location, location).heading();    
-    float diff = target - heading;
-    if (diff < ORIENTATION_INCREMENT*dt) {
-      heading = target;
-      gun.fire(heading);
-      return;
+    PVector target = PVector.sub(level.player.location, location);    
+    float orr = atan2(target.y, target.x);
+
+    // Will take a frame extra at the PI boundary
+    if (abs(orr - heading) <= ORIENTATION_INCREMENT) {
+      heading = orr ;
+      if (gun != null)
+        gun.fire(heading);
+      return ;
     }
-    if (diff < 0) {
-      heading -= ORIENTATION_INCREMENT*dt;
+
+    // if it's less than me, then how much if up to PI less, decrease otherwise increase
+    if (orr < heading) {
+      if (heading - orr < PI) heading -= ORIENTATION_INCREMENT ;
+      else heading += ORIENTATION_INCREMENT ;
     } else {
-      heading += ORIENTATION_INCREMENT*dt;
+      if (orr - heading < PI) heading += ORIENTATION_INCREMENT ;
+      else heading -= ORIENTATION_INCREMENT ;
     }
+
+    // Keep in bounds
+    if (heading > PI) heading -= 2*PI ;
+    else if (heading < -PI) heading += 2*PI ;
   }
 
   void move() {

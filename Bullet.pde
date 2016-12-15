@@ -1,4 +1,4 @@
-class Bullet {
+ class Bullet {
   PVector location;
   PVector velocity;
   Level level;
@@ -18,9 +18,17 @@ class Bullet {
     velocity.mult(dt);
     location.add(velocity);
     velocity.div(dt);
-
+    
     boolean killed = false;
     PVector p = location.copy();
+    
+    for (Wall w : level.walls){
+      if (w.intersectedBy(pi, p)){
+       level.bullets.remove(this);
+       return;
+      }
+    }
+    
     Iterator<Agent> as = level.agents.iterator();
     while (as.hasNext()) {
       Character a = as.next();
