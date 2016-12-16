@@ -17,10 +17,10 @@ class LevelGenerator {
       JSONArray wall = (JSONArray) walls.get(i);
       JSONArray start = (JSONArray) wall.get(0);
       JSONArray end = (JSONArray) wall.get(1);
-      int x1 = (Integer)start.get(0);
-      int y1 = (Integer)start.get(1);
-      int x2 = (Integer)end.get(0);
-      int y2 = (Integer)end.get(1);
+      int x1 = (int)start.get(0);
+      int y1 = (int)start.get(1);
+      int x2 = (int)end.get(0);
+      int y2 = (int)end.get(1);
       if (x1 >x2) {
         int t = x2;
         x2 = x1;
@@ -66,16 +66,16 @@ class LevelGenerator {
         }
       }
     }
-    
-    for (PositionNode n : level.nodes){
-     n.findNeighbours(); 
+
+    for (PositionNode n : level.nodes) {
+      n.findNeighbours();
     }
 
     //AI nodes
     //player
     JSONObject player = (JSONObject) json.get("player");
     JSONArray playerLocation = (JSONArray) player.get("location");
-    Player p = new Player(level, gridCoordsToPoint((Integer)playerLocation.get(0), (Integer)playerLocation.get(1)), new PVector(0, 0), #ff00ff);
+    Player p = new Player(level, gridCoordsToPoint((int)playerLocation.get(0), (int)playerLocation.get(1)), new PVector(0, 0), #ff00ff);
     p.location.x += SQUARE_SIZE/2;
     p.location.y += SQUARE_SIZE/2;
     level.player = p;
@@ -93,7 +93,7 @@ class LevelGenerator {
       JSONObject agent = (JSONObject) agents.get(i);
       JSONArray agentL = (JSONArray) agent.get("location");
       gun = agent.optString("gun");
-      Agent a = new Agent(level, gridCoordsToPoint((Integer)agentL.get(0), (Integer)agentL.get(1)), new PVector(0, 0), #ff0000);
+      Agent a = new Agent(level, gridCoordsToPoint((int)agentL.get(0), (int)agentL.get(1)), new PVector(0, 0), #ff0000);
       a.location.x += SQUARE_SIZE/2;
       a.location.y += SQUARE_SIZE/2;
       a.heading = -PI/2;
@@ -111,7 +111,7 @@ class LevelGenerator {
     for (int i = 0; i<guns.length(); i++) {
       JSONObject g = (JSONObject) guns.get(i);
       JSONArray gloc = (JSONArray) g.get("location");
-      PVector loc = gridCoordsToPoint((Integer)gloc.get(0), (Integer)gloc.get(1));
+      PVector loc = gridCoordsToPoint((int)gloc.get(0), (int)gloc.get(1));
       loc.x += SQUARE_SIZE/2;
       loc.y += SQUARE_SIZE/2;
       String type = g.optString("type");
@@ -126,13 +126,65 @@ class LevelGenerator {
     return level;
   }
 
-  boolean writeLevel(String filename) {
-    return false;
-  }
+  boolean writeLevel(Level level, String fileName) {
+    if (!fileName.endsWith(".json")) {
+      fileName += ".json";
+      println(fileName);
+    }
+    PrintWriter writer;
+    try {
+      writer = createWriter(fileName);
+      JSONWriter j = new JSONWriter(writer);
+      j.object();
+      j.key("width");
+      j.value(level.w);
+      j.key("height").value(level.h);
+      //walls
+      j.key("walls").array();
+      for (Wall w : level.walls) {
+        j.array();
+        Tuple start = pointToGridCoords(w.start);
+        j.array().value(start.x).value(start.y).endArray();
+        Tuple end = pointToGridCoords(w.end);
+        j.array().value((int)end.x-1).value((int)end.y-1).endArray();  //TODO may need to remove one
+        j.endArray();
+      }
+      j.endArray();
+      //player
+      j.key("player").object();
+      Tuple ploc = pointToGridCoords(level.player.location);
+      j.key("location").array().value(ploc.x).value(ploc.y).endArray();
+      j.key("gun").value(level.player.gun == null? "" : level.player.gun.type);
+      j.endObject();
+      //agents
+      j.key("agents").array();
+      for (Agent smith : level.agents) {
+        j.object();
+        Tuple sloc = pointToGridCoords(smith.location);
+        j.key("location").array().value(sloc.x).value(sloc.y).endArray();
+        j.key("gun").value(smith.gun ==null? "" : smith.gun.type);
+        j.endObject();
+      }
+      j.endArray();
+      //guns
+      j.key("guns").array();
+      for (Gun g : level.guns) {
+        j.object();
+        j.key("type").value(g.type);
+        Tuple gloc = pointToGridCoords(g.location);
+        j.key("location").array().value(gloc.x).value(gloc.y).endArray();
+        j.endObject();
+      }
+      j.endArray();
+      //close
+      j.endObject();
+      writer.close();
+    } 
+    catch (Exception e) {
+      System.err.println(e.getMessage());
+      return false;
+    } 
 
-  PVector gridCoordsToPoint(int i, int j) {
-    float x = i * SQUARE_SIZE;
-    float y = j * SQUARE_SIZE;
-    return new PVector(x, y);
+    return true;
   }
 }

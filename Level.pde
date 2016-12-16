@@ -39,8 +39,6 @@ class Level {
     for (Gun g : guns) {
       g.display();
     }
-
-
   }
 
   boolean outOfBounds(PVector l) {

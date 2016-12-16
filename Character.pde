@@ -70,7 +70,6 @@ class Character {
         p.rotate(heading);
         p.add(location); 
         fill(255);
-        ellipse(p.x, p.y, 5, 5);
       }
 
       Iterator<Agent> as = level.agents.iterator();
@@ -194,6 +193,10 @@ class Character {
     gun.location = location.copy();
     level.guns.add(gun);
     gun.owner = null;
+    gun = null;
+  }
+
+  void removeGun() {
     gun = null;
   }
 }

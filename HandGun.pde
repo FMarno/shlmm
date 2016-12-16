@@ -4,6 +4,7 @@ class HandGun extends Gun {
     super(level, location, owner);
     reload_time = 0.5 * FRAME_RATE;
     ammo = 6;
+    type = "hand";
   }
 
   void fire(float heading) {

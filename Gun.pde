@@ -6,12 +6,14 @@ abstract class Gun {
   PVector location;
   PVector velocity;
   Character owner;
+  String type;
 
   public Gun(Level level, PVector location, Character owner) {
     this.level = level;
     this.location = location;
     this.owner = owner;
     velocity = new PVector(0, 0);
+    type = "";
   }
 
   abstract void fire(float heading);
@@ -35,8 +37,8 @@ abstract class Gun {
     noStroke();
     rect(location.x, location.y, 10, 4);
   }
-  
-  boolean contains(PVector p){
+
+  boolean contains(PVector p) {
     return (location.x - SQUARE_SIZE/3 <= p.x && p.x <= location.x + SQUARE_SIZE/3 && location.y - SQUARE_SIZE/3 <= p.y && p.y <= location.y + SQUARE_SIZE/3);
   }
 }

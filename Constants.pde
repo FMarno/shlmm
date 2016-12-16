@@ -1,5 +1,5 @@
 final int HEAD_SIZE = 15, CHAR_WIDTH = 40, CHAR_HEIGHT = 25, BULLET_SIZE = 5;
-final float SPEED = 3, ACC=SPEED/10, BULLET_SPEED = 20;
+final float SPEED = 3, ACC=SPEED/10, BULLET_SPEED = 15;
 final int SQUARE_SIZE = CHAR_WIDTH;
 
 final float ORIENTATION_INCREMENT = PI/32;
@@ -22,7 +22,10 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import ddf.minim.*;
+import java.io.FileWriter;
 Minim minim;
 AudioPlayer gameSong;
 
-enum Mode{GAME, MENU, MAKER}
+enum Mode {
+  GAME, MENU, MAKER
+}

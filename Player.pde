@@ -63,6 +63,4 @@ class Player extends Character {
     }
     super.display();
   }
-
-  
 }

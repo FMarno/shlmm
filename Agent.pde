@@ -133,7 +133,7 @@ class Agent extends Character {
 
     velocity.div(dt);
     velocity.mult(0.93);
-    
+
     float orr = velocity.heading();
 
     // Will take a frame extra at the PI boundary

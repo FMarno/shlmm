@@ -3,6 +3,10 @@ public class Tuple<X, Y> {
   public final Y y; 
   public Tuple(X x, Y y) { 
     this.x = x; 
-    this.y = y; 
-  } 
+    this.y = y;
+  }
+
+  String toString() {
+    return "(" + x + ", " + y + ")";
+  }
 } 
