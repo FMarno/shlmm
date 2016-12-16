@@ -15,7 +15,6 @@ void setup() {
 
   //level setup
   lg = new LevelGenerator();
-  //lg.writeLevel(lg.parseLevel("levels/level1.json"), "levels/out");
 
   homeMenu();
 }
@@ -92,6 +91,26 @@ void draw() {
       fill(#ff0000);
       String mode = makerMode.name;
       text("mode: " + mode, width/2, 50);
+
+      if (notification != null) {
+        fill(255);
+        rect(width/2, 200, 400, 100);
+        fill(0);
+        text(notification, width/2, 200);
+        nCounter--;
+        if (nCounter == 0) {
+          notification = null;
+        }
+      }
+
+      if (makerMode == MakerMode.SAVE && level.player != null) {
+        fill(255);
+        rect(width/2, 200, 400, 300);
+        fill(0);
+        text("Enter level name NB duplicate names will overwrite", width/2, 100);
+        text(levelName, width/2, 200);
+        text("enter to continue, esp to cancel", width/2, 300);
+      }
     }
   }
 }
@@ -158,7 +177,7 @@ void levelMenu() {
   }
   scale = 1;
 
-  File dir = new File("../sketchbook/shlmm/levels"); //TODO
+  File dir = new File(dataPath("levels"));
   File[] flist = dir.listFiles();
   Menu levels = new Menu();
   for (int i = 0; i<flist.length; i++) {
@@ -171,7 +190,7 @@ void levelMenu() {
 
 
 void restart() {
-  level = lg.parseLevel("levels/level1.json");
+  level = lg.parseLevel(playing);
   GAME_OVER = false;
 }
 

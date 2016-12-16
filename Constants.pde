@@ -16,9 +16,12 @@ Level level;
 Menu menu;
 Menu pauseMenu;
 String notification;
+String levelName = "";
+String playing = "";
 Mode gameMode = Mode.MENU;
 MakerMode makerMode = MakerMode.WALL;
 PVector start, end;
+int nCounter;
 
 import java.awt.geom.*;
 import java.util.Iterator;

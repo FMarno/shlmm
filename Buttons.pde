@@ -41,6 +41,21 @@ void keyPressed() {
       level.player.dropGun();
       break;
     }
+  } else if (gameMode == Mode.MAKER && makerMode == MakerMode.SAVE && level.player != null) {
+    if (keyCode == BACKSPACE) {
+      if (levelName.length() > 0) {
+        levelName = levelName.substring(0, levelName.length()-1);
+      }
+    } else if (keyCode == DELETE) {
+      levelName = "";
+    } else if (keyCode == ESC) {
+      makerMode = MakerMode.WALL;
+    } else if (keyCode == ENTER || keyCode == RETURN) {
+      lg.writeLevel(level, dataPath("levels/"+levelName));
+      homeMenu();
+    } else if (keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT) {
+      levelName = levelName + key;
+    }
   } else if (gameMode == Mode.MAKER) {
     switch (key) {
     case 'w': 
@@ -79,6 +94,7 @@ void keyPressed() {
           makerMode = MakerMode.SAVE;
         } else {
           notification = "A level requires a player!";
+          nCounter = FRAME_RATE *2;
         }
         break;
       }

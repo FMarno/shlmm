@@ -8,7 +8,8 @@ class LevelButton extends Button {
   }
 
   void action() {
-    startLevel("levels/" + word);
+    playing = dataPath("levels/"+word);
+    startLevel(playing);
   }
 
   void display() {

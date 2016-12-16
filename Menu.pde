@@ -6,12 +6,12 @@ class Menu {
       b.display();
     }
   }
-  
-  void press(PVector location){
-   for (Button b : buttons){
-    if (b.contains(location)){
-     b.action(); 
+
+  void press(PVector location) {
+    for (Button b : buttons) {
+      if (b.contains(location)) {
+        b.action();
+      }
     }
-   }
   }
 }

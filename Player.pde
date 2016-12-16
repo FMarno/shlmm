@@ -63,12 +63,13 @@ class Player extends Character {
     }
     super.display();
   }
-  
+
   void giveGun(Gun gun) {
     if (this.gun == null) {
       this.gun = gun;
       this.gun.location =this.location;
       this.gun.velocity.setMag(0);
+      this.gun.time_to_reload = 1;
       this.gun.owner = this;
     }
   }

@@ -19,5 +19,4 @@ class MakerButton extends Button {
     fill(255);
     text(word, location.x, location.y);
   }
-  
 }

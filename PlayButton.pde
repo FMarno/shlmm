@@ -7,7 +7,7 @@ class PlayButton extends Button {
     h = 100;
     fill = 0;
   }
-  
+
   void action() {
     levelMenu();
   }
