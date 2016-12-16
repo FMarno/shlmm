@@ -146,7 +146,7 @@ class LevelGenerator {
         Tuple start = pointToGridCoords(w.start);
         j.array().value(start.x).value(start.y).endArray();
         Tuple end = pointToGridCoords(w.end);
-        j.array().value((int)end.x-1).value((int)end.y-1).endArray();  //TODO may need to remove one
+        j.array().value((int)end.x-1).value((int)end.y-1).endArray(); 
         j.endArray();
       }
       j.endArray();

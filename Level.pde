@@ -11,6 +11,8 @@ class Level {
 
 
   void update() {
+    if (agents.size() == 0)
+      GAME_WON = true;
 
     for (Agent a : agents) {
       a.update();
@@ -32,7 +34,8 @@ class Level {
       a.display();
     }
 
-    player.display();
+    if (player != null)
+      player.display();
     for (Bullet b : bullets) {
       b.display();
     }

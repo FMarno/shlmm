@@ -3,17 +3,18 @@ final float SPEED = 3, ACC=SPEED/10, BULLET_SPEED = 15;
 final int SQUARE_SIZE = CHAR_WIDTH;
 
 final float ORIENTATION_INCREMENT = PI/32;
-float scale;
+float scale = 1;
 final float SAT_RADIUS = SQUARE_SIZE*(3/2);
 
 
 final int FRAME_RATE = 60;
 
 float dt = 1;
-boolean W, A, S, D, PAUSE, GAME_OVER;
+boolean W, A, S, D, PAUSE, GAME_OVER, GAME_WON, MUTE;
 LevelGenerator lg;
 Level level;
-
+Menu menu;
+Menu pauseMenu;
 
 import java.awt.geom.*;
 import java.util.Iterator;
@@ -22,10 +23,13 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import ddf.minim.*;
-import java.io.FileWriter;
 Minim minim;
 AudioPlayer gameSong;
+AudioPlayer menuSong;
+
 
 enum Mode {
   GAME, MENU, MAKER
 }
+
+Mode gameMode = Mode.MENU;

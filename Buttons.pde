@@ -1,4 +1,5 @@
 void keyPressed() {
+  if (gameMode != Mode.GAME) return;
   switch (key) {
   case 'w':
     W = true;
@@ -20,6 +21,20 @@ void keyPressed() {
     //if (GAME_OVER)
     restart(); 
     break;
+  case 'm':
+    if (MUTE) {
+      if (gameMode == Mode.GAME) {
+        gameSong.loop();
+      } else {
+        menuSong.loop();
+      }
+      MUTE = false;
+    } else {
+      gameSong.pause();
+      menuSong.pause();
+      MUTE = true;
+    }
+    break;
   case ' ':
     level.player.dropGun();
     break;
@@ -27,6 +42,12 @@ void keyPressed() {
 }
 
 void keyReleased() {
+  if (gameMode == Mode.MAKER){
+   if (key == 'p'){
+     PAUSE = ! PAUSE;
+   }
+  }
+  if (gameMode != Mode.GAME) return;
   switch (key) {
   case 'w':
     W = false;
