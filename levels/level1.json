@@ -11,7 +11,7 @@
 	"player":
 	{
 		"location":[15,5],
-		"gun": ""
+		"gun": "hand"
 	},
 	"agents":
 	[

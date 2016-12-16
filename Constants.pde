@@ -15,6 +15,10 @@ LevelGenerator lg;
 Level level;
 Menu menu;
 Menu pauseMenu;
+String notification;
+Mode gameMode = Mode.MENU;
+MakerMode makerMode = MakerMode.WALL;
+PVector start, end;
 
 import java.awt.geom.*;
 import java.util.Iterator;
@@ -32,9 +36,12 @@ enum Mode {
   GAME, MENU, MAKER
 }
 
-enum MakerMode {
- WALL, PLAYER, AGENT, GUN, SAVE 
-}
+public enum MakerMode {
+  WALL ("Wall"), PLAYER("Player"), AGENT("Agent"), GUN("Gun"), GUNAGENT("Agent with Gun"), DELETE ("Delete"), SAVE("save");
 
-Mode gameMode = Mode.MENU;
-MakerMode makerMode = MakerMode.WALL;
+  final String name;
+
+  private MakerMode(String name) {
+    this.name = name;
+  }
+}

@@ -43,7 +43,45 @@ void keyPressed() {
     }
   } else if (gameMode == Mode.MAKER) {
     switch (key) {
-
+    case 'w': 
+      {
+        makerMode = MakerMode.WALL;
+        break;
+      }
+    case 'q' : 
+      {
+        makerMode = MakerMode.PLAYER;
+        break;
+      }
+    case 'e' : 
+      {
+        makerMode = MakerMode.AGENT;
+        break;
+      }
+    case 'r': 
+      {
+        makerMode = MakerMode.GUN;
+        break;
+      }
+    case 't':
+      {
+        makerMode = MakerMode.GUNAGENT;
+        break;
+      }
+    case 'd' :
+      {
+        makerMode = MakerMode.DELETE;
+        break;
+      }
+    case 's': 
+      {
+        if (level.player != null) {
+          makerMode = MakerMode.SAVE;
+        } else {
+          notification = "A level requires a player!";
+        }
+        break;
+      }
     case CODED: 
       {
         switch (keyCode) {

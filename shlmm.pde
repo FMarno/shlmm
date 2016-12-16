@@ -68,22 +68,30 @@ void draw() {
       }
       background(#A99E81);
       level.display();
-      
-      
+      for (Agent a : level.agents) {
+        if (a.gun != null) {
+          fill(255);
+          text("G", a.location.x, a.location.y);
+        }
+      }
 
-      
+      if (mousePressed) {
+        displayPotential();
+      }
       PVector m = new PVector(mouseX/scale, mouseY/scale);
-      
       noFill();
       stroke(0);
       strokeWeight(1);
       Tuple mloc = pointToGridCoords(m);
-      PVector square = gridCoordsToPoint((int)mloc.x,(int)mloc.y);
-      
+      PVector square = gridCoordsToPoint((int)mloc.x, (int)mloc.y);
       square.x += SQUARE_SIZE/2;
       square.y += SQUARE_SIZE/2;
       rect(square.x, square.y, SQUARE_SIZE, SQUARE_SIZE);
-      return;
+      // display mode
+      scale(1/scale, 1/scale);
+      fill(#ff0000);
+      String mode = makerMode.name;
+      text("mode: " + mode, width/2, 50);
     }
   }
 }
@@ -159,7 +167,6 @@ void levelMenu() {
   }
   levels.buttons.add( new HomeButton(new PVector(150, height/6)));
   menu = levels;
-  //TODO find levels
 }
 
 
@@ -167,9 +174,6 @@ void restart() {
   level = lg.parseLevel("levels/level1.json");
   GAME_OVER = false;
 }
-
-
-
 
 void resizeLevel() {
   float xscale = (width/SQUARE_SIZE)/(float)level.w;
@@ -182,4 +186,57 @@ void resizeLevel() {
   level.walls.set(1, new Wall(w-1, 0, w-1, h-1));
   level.walls.set(2, new Wall(1, 0, w-2, 0));
   level.walls.set(3, new Wall(1, h-1, w-2, h-1));
+}
+
+void displayPotential() {
+  PVector current = new PVector(mouseX/scale, mouseY/scale);
+  Tuple<Integer, Integer> s = pointToGridCoords(start);
+  Tuple<Integer, Integer> e = pointToGridCoords(current);
+  switch(makerMode) {
+  case WALL : 
+    {
+      Wall w = new Wall(s.x, s.y, e.x, e.y);
+      w.display();
+      break;
+    }
+  case PLAYER :
+    {
+      PVector l = gridCoordsToPoint(s.x, s.y);
+      l.add(new PVector(SQUARE_SIZE/2, SQUARE_SIZE/2));
+      Player p = new Player(level, l, PVector.sub(current, start), #ff00ff);
+      p.heading = p.direction.heading();
+      p.display();
+      break;
+    }
+  case AGENT : 
+    {
+      PVector l = gridCoordsToPoint(s.x, s.y);
+      l.add(new PVector(SQUARE_SIZE/2, SQUARE_SIZE/2));
+      Agent a = new Agent(level, l, PVector.sub(current, start), #ff0000);
+      a.heading = a.direction.heading();
+      a.display();
+      break;
+    }
+  case GUN : 
+    {
+      Gun g = new HandGun(level, current, null);
+      g.display();
+      break;
+    }
+  case GUNAGENT : 
+    {
+      PVector l = gridCoordsToPoint(s.x, s.y);
+      l.add(new PVector(SQUARE_SIZE/2, SQUARE_SIZE/2));
+      Agent a = new Agent(level, l, PVector.sub(current, start), #ff0000);
+      a.heading = a.direction.heading();
+      a.display();
+      fill(255);
+      text("G", a.location.x, a.location.y);
+      break;
+    }
+  default :
+    {
+      return;
+    }
+  }
 }

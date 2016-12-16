@@ -19,8 +19,10 @@ abstract class Gun {
   abstract void fire(float heading);
 
   void update() {
+    velocity.mult(dt);
     location.add(velocity);
-    velocity.mult(0.9);
+    velocity.div(dt);
+    velocity.mult(0.9*dt);
     if (time_to_reload > 0) {
       time_to_reload -= dt;
       if (time_to_reload < 0 && owner == level.player) {
