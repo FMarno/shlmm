@@ -57,14 +57,28 @@ void keyPressed() {
           }
         case DOWN:
           { 
-            if (level.h <80) {
+            if (level.h <33) {
               level.h++;
               resizeLevel();
             }
             break;
           }
         case LEFT:
+          {
+            if (level.w > width/SQUARE_SIZE) {
+              level.w--;
+              resizeLevel();
+            }
+            break;
+          }
         case RIGHT:
+          { 
+            if (level.w <41) {
+              level.w++;
+              resizeLevel();
+            }
+            break;
+          }
         }
       }
     }

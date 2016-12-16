@@ -32,4 +32,9 @@ enum Mode {
   GAME, MENU, MAKER
 }
 
+enum MakerMode {
+ WALL, PLAYER, AGENT, GUN, SAVE 
+}
+
 Mode gameMode = Mode.MENU;
+MakerMode makerMode = MakerMode.WALL;

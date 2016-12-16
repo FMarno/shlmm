@@ -15,7 +15,7 @@ void setup() {
 
   //level setup
   lg = new LevelGenerator();
-  lg.writeLevel(lg.parseLevel("levels/level1.json"), "levels/out");
+  //lg.writeLevel(lg.parseLevel("levels/level1.json"), "levels/out");
 
   homeMenu();
 }
@@ -73,13 +73,8 @@ void draw() {
 
       
       PVector m = new PVector(mouseX/scale, mouseY/scale);
-      fill(255);
-      ellipse(m.x, m.y, 5,5);
-      Tuple mcoord = pointToGridCoords(m);
-      println(mcoord);
       
-      
-      /*noFill();
+      noFill();
       stroke(0);
       strokeWeight(1);
       Tuple mloc = pointToGridCoords(m);
@@ -87,7 +82,7 @@ void draw() {
       
       square.x += SQUARE_SIZE/2;
       square.y += SQUARE_SIZE/2;
-      rect(square.x, square.y, SQUARE_SIZE, SQUARE_SIZE);*/
+      rect(square.x, square.y, SQUARE_SIZE, SQUARE_SIZE);
       return;
     }
   }
