@@ -7,7 +7,7 @@ class Player extends Character {
 
 
   void update() {
-    heading = new PVector(mouseX*(1/scale) - location.x, mouseY*(1/scale)  - location.y).heading();
+    heading = new PVector(mouseX/scale - location.x, mouseY/scale  - location.y).heading();
 
     PVector acceleration = direction.copy();
     acceleration.setMag(ACC);

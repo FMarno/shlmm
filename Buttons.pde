@@ -1,27 +1,5 @@
 void keyPressed() {
-  if (gameMode != Mode.GAME) return;
-  switch (key) {
-  case 'w':
-    W = true;
-    level.player.direction.y = -SPEED;
-    break;
-  case 'a':
-    A = true;
-    level.player.direction.x = -SPEED;
-    break;
-  case 's':
-    S = true;
-    level.player.direction.y = SPEED;
-    break;
-  case 'd':
-    D = true;
-    level.player.direction.x = SPEED;
-    break;
-  case 'r':
-    //if (GAME_OVER)
-    restart(); 
-    break;
-  case 'm':
+  if (key == 'm') {
     if (MUTE) {
       if (gameMode == Mode.GAME) {
         gameSong.loop();
@@ -34,18 +12,70 @@ void keyPressed() {
       menuSong.pause();
       MUTE = true;
     }
-    break;
-  case ' ':
-    level.player.dropGun();
-    break;
+  }
+  if (gameMode == Mode.MENU) {
+    return;
+  } else if (gameMode == Mode.GAME) {
+    switch (key) {
+    case 'w':
+      W = true;
+      level.player.direction.y = -SPEED;
+      break;
+    case 'a':
+      A = true;
+      level.player.direction.x = -SPEED;
+      break;
+    case 's':
+      S = true;
+      level.player.direction.y = SPEED;
+      break;
+    case 'd':
+      D = true;
+      level.player.direction.x = SPEED;
+      break;
+    case 'r':
+      //if (GAME_OVER)
+      restart(); 
+      break;
+    case ' ':
+      level.player.dropGun();
+      break;
+    }
+  } else if (gameMode == Mode.MAKER) {
+    switch (key) {
+
+    case CODED: 
+      {
+        switch (keyCode) {
+        case UP: 
+          {
+            if (level.h > height/SQUARE_SIZE) {
+              level.h--;
+              resizeLevel();
+            }
+            break;
+          }
+        case DOWN:
+          { 
+            if (level.h <80) {
+              level.h++;
+              resizeLevel();
+            }
+            break;
+          }
+        case LEFT:
+        case RIGHT:
+        }
+      }
+    }
   }
 }
 
 void keyReleased() {
-  if (gameMode == Mode.MAKER){
-   if (key == 'p'){
-     PAUSE = ! PAUSE;
-   }
+  if (gameMode == Mode.MAKER) {
+    if (key == 'p') {
+      PAUSE = ! PAUSE;
+    }
   }
   if (gameMode != Mode.GAME) return;
   switch (key) {
