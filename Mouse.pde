@@ -82,6 +82,10 @@ void mouseReleased() {
       }
     case GUN : 
       {
+        if (level.player != null && level.player.contains(end)){
+          level.player.giveGun(new HandGun(level, level.player.location, level.player));
+          break;
+        }
         Gun g = new HandGun(level, end, null);
         level.guns.add(g);
         break;

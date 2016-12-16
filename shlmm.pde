@@ -73,6 +73,10 @@ void draw() {
           text("G", a.location.x, a.location.y);
         }
       }
+      if (level.player != null && level.player.gun != null){
+        fill(255);
+        text("G", level.player.location.x, level.player.location.y);
+      }
 
       if (mousePressed) {
         displayPotential();
