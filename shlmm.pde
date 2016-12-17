@@ -40,7 +40,6 @@ void draw() {
       background(#A99E81);
       level.update();
       level.display();
-      text(dt, 50, 20);
 
       if (mousePressed)
         level.player.attack();
