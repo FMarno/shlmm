@@ -27,7 +27,7 @@ class Agent extends Character {
     float orr = atan2(target.y, target.x);
 
     // Will take a frame extra at the PI boundary
-    if (abs(orr - heading) <= ORIENTATION_INCREMENT) {
+    if (abs(orr - heading) <= ORIENTATION_INCREMENT*scale) {
       heading = orr ;
       if (gun != null)
         attack();
@@ -36,11 +36,11 @@ class Agent extends Character {
 
     // if it's less than me, then how much if up to PI less, decrease otherwise increase
     if (orr < heading) {
-      if (heading - orr < PI) heading -= ORIENTATION_INCREMENT ;
-      else heading += ORIENTATION_INCREMENT ;
+      if (heading - orr < PI) heading -= ORIENTATION_INCREMENT*scale ;
+      else heading += ORIENTATION_INCREMENT*scale ;
     } else {
-      if (orr - heading < PI) heading += ORIENTATION_INCREMENT ;
-      else heading -= ORIENTATION_INCREMENT ;
+      if (orr - heading < PI) heading += ORIENTATION_INCREMENT*scale ;
+      else heading -= ORIENTATION_INCREMENT*scale ;
     }
 
     // Keep in bounds
@@ -53,18 +53,18 @@ class Agent extends Character {
     float orr = atan2(target.y, target.x);
 
     // Will take a frame extra at the PI boundary
-    if (abs(orr - heading) <= ORIENTATION_INCREMENT) {
+    if (abs(orr - heading) <= ORIENTATION_INCREMENT*scale) {
       heading = orr ;
       attack();
       return ;
     }
     // if it's less than me, then how much if up to PI less, decrease otherwise increase
     if (orr < heading) {
-      if (heading - orr < PI) heading -= ORIENTATION_INCREMENT ;
-      else heading += ORIENTATION_INCREMENT ;
+      if (heading - orr < PI) heading -= ORIENTATION_INCREMENT*scale ;
+      else heading += ORIENTATION_INCREMENT*scale ;
     } else {
-      if (orr - heading < PI) heading += ORIENTATION_INCREMENT ;
-      else heading -= ORIENTATION_INCREMENT ;
+      if (orr - heading < PI) heading += ORIENTATION_INCREMENT*scale ;
+      else heading -= ORIENTATION_INCREMENT*scale ;
     }
 
     // Keep in bounds
@@ -137,17 +137,17 @@ class Agent extends Character {
     float orr = velocity.heading();
 
     // Will take a frame extra at the PI boundary
-    if (abs(orr - heading) <= ORIENTATION_INCREMENT) {
+    if (abs(orr - heading) <= ORIENTATION_INCREMENT*scale) {
       heading = orr ;
       return ;
     }
     // if it's less than me, then how much if up to PI less, decrease otherwise increase
     if (orr < heading) {
-      if (heading - orr < PI) heading -= ORIENTATION_INCREMENT ;
-      else heading += ORIENTATION_INCREMENT ;
+      if (heading - orr < PI) heading -= ORIENTATION_INCREMENT*scale ;
+      else heading += ORIENTATION_INCREMENT*scale ;
     } else {
-      if (orr - heading < PI) heading += ORIENTATION_INCREMENT ;
-      else heading -= ORIENTATION_INCREMENT ;
+      if (orr - heading < PI) heading += ORIENTATION_INCREMENT*scale ;
+      else heading -= ORIENTATION_INCREMENT*scale ;
     }
 
     // Keep in bounds

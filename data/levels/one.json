@@ -1,0 +1,1 @@
+{"width":28,"height":21,"walls":[[[0,0],[0,20]],[[27,0],[27,20]],[[1,0],[26,0]],[[1,20],[26,20]]],"player":{"location":[13,12],"gun":""},"agents":[{"location":[13,11],"gun":"hand"},{"location":[22,9],"gun":"hand"},{"location":[19,4],"gun":"hand"},{"location":[9,4],"gun":"hand"},{"location":[5,8],"gun":"hand"}],"guns":[]}
